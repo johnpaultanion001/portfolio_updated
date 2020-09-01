@@ -31,4 +31,11 @@ Route::resource('/','personalController');
 Route::resource('adminsite/personalInfo','personalController');
 
 
+Route::get('/artisan/storage', function() {
+    $command = 'storage:link';
+    $result = Artisan::call($command);
+    return Artisan::output();
+});
+
+
 
