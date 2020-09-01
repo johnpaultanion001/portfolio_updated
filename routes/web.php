@@ -27,4 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('adminsite','msgsController');
 Route::get('/home', 'msgsController@index');
+Route::resource('/','personalController');
+Route::resource('adminsite/personalInfo','personalController');
+
+
 

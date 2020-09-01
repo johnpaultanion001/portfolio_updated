@@ -33,7 +33,14 @@
         {{$msgs->links()}}
     </div>
     </div>
+
+    <a href="/adminsite/personalInfo/show" class="btn btn-primary">View Personal Information</a>
     @else
         <p>No msg found</p>
     @endif
+
+
+    
+    
+
 @endsection
