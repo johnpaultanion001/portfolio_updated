@@ -58,7 +58,7 @@
 							</div>
 
 							<div class="left-column">
-								<img id="profile_pic" src="{{URL::to('/')}}/storage/profile_pic/{{$personal_info->profile_pic}}">
+								<img id="profile_pic" src="{{URL::to('/')}}/profile_pic/{{$personal_info->profile_pic}}">
 								<h5 style="text-align: center;line-height: 0;">Personalize Theme</h5>
 
 								<div id="theme-options-wrapper">
