@@ -6,8 +6,16 @@ use Illuminate\Http\Request;
 use App\personal_info;
 use DB;
 
+use File; // For File
+
+
 class personalController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,11 +34,11 @@ class personalController extends Controller
      */
     public function create(Request $request, $id)
     {
-       
+
 
     }
 
-   
+
     /**
      * Store a newly created resource in storage.
      *
@@ -51,7 +59,7 @@ class personalController extends Controller
     public function show($id)
     {
         $personal_infos = personal_info::all();
-        
+
         return view('adminsite/personalInfo.show')->with('personal_infos', $personal_infos);
     }
 
@@ -63,9 +71,9 @@ class personalController extends Controller
      */
     public function edit($id)
     {
-        
+
         $personal_infos = personal_info::all();
-        
+
         return view('adminsite/personalInfo.edit')->with('personal_infos', $personal_infos);
     }
 
@@ -107,12 +115,14 @@ class personalController extends Controller
             'project2_desc' => 'required',
             'project3_title' => 'required',
             'project3_desc' => 'required'
-            
-            
-            
+
+
+
 
         ]);
 
+
+        
         //Handle File Upload
         if($request->hasFile('profile_pic')){
             //Get filename with the ext
@@ -124,7 +134,12 @@ class personalController extends Controller
             //Filename to store
             $filenameToStore=$filename.'_'.time().'.'.$extension;
             //Upload Image
-            $path = $request->file('profile_pic')->storeAs('public/profile_pic' , $filenameToStore);
+            $path = $request->file('profile_pic')->move(public_path('/uploadedimages'), $filenameToStore);
+            // imageName = time().'.'.$request->image->getClientOriginalExtension();
+            // $request->image->move(public_path('/uploadedimages'), $imageName);
+            // $path = $request->file('profile_pic')->Storage::disk('public')->put('imgs/', $filenameToStore);
+
+
         }
         else if($request->hasFile('resume')){
             //Get filename with the ext
@@ -136,7 +151,8 @@ class personalController extends Controller
             //Filename to store
             $filenameToStore=$filename.'_'.time().'.'.$extension;
             //Upload Image
-            $path = $request->file('resume')->storeAs('public/profile_pic' , $filenameToStore);
+            $path = $request->file('resume')->move(public_path('/uploadedimages'), $filenameToStore);
+
         }
         else if($request->hasFile('cover_img')){
             //Get filename with the ext
@@ -148,7 +164,7 @@ class personalController extends Controller
             //Filename to store
             $filenameToStore=$filename.'_'.time().'.'.$extension;
             //Upload Image
-            $path = $request->file('cover_img')->storeAs('public/profile_pic' , $filenameToStore);
+            $path = $request->file('cover_img')->move(public_path('/uploadedimages'), $filenameToStore);
         }
         else if($request->hasFile('project1_img')){
             //Get filename with the ext
@@ -160,7 +176,7 @@ class personalController extends Controller
             //Filename to store
             $filenameToStorep1=$filenamep1.'_'.time().'.'.$extensionp1;
             //Upload Image
-            $pathp1 = $request->file('project1_img')->storeAs('public/profile_pic' , $filenameToStorep1);
+            $path1 = $request->file('project1_img')->move(public_path('/uploadedimages'), $filenameToStorep1);
         }
         else if($request->hasFile('project2_img')){
             //Get filename with the ext
@@ -172,7 +188,7 @@ class personalController extends Controller
             //Filename to store
             $filenameToStorep2=$filenamep2.'_'.time().'.'.$extensionp2;
             //Upload Image
-            $pathp2 = $request->file('project2_img')->storeAs('public/profile_pic' , $filenameToStorep2);
+            $path2 = $request->file('project2_img')->move(public_path('/uploadedimages'), $filenameToStorep2);
         }
         else if($request->hasFile('project3_img')){
             //Get filename with the ext
@@ -184,13 +200,13 @@ class personalController extends Controller
             //Filename to store
             $filenameToStorep3=$filenamep3.'_'.time().'.'.$extensionp3;
             //Upload Image
-            $pathp3 = $request->file('project3_img')->storeAs('public/profile_pic' , $filenameToStorep3);
+            $path3 = $request->file('project3_img')->move(public_path('/uploadedimages'), $filenameToStorep3);
         }
 
-      
 
 
-        
+
+
 
         // create personal_info
         $personal_info = personal_info::find($id);
@@ -224,64 +240,70 @@ class personalController extends Controller
         $personal_info->project3_desc = $request->input('project3_desc');
 
 
-        
+
 
 
 
         if($request->hasFile('profile_pic')){
 
                 if($personal_info->profile_pic != 'profile.jpg'){
-                    Storage::delete('public/profile_pic/'.$personal_info->profile_pic);
+
+                   //Storage::delete('imgs/'.$personal_info->profile_pic);
+
+
+                    File::delete(public_path('uploadedimages/'.$personal_info->profile_pic));
+
+
                     }
 
             $personal_info->profile_pic = $filenameToStore;
-           
+
         }
         else if($request->hasFile('resume')){
 
             if($personal_info->resume != 'resume.docx'){
-                Storage::delete('public/profile_pic/'.$personal_info->resume);
+                File::delete(public_path('uploadedimages/'.$personal_info->resume));
                 }
 
         $personal_info->resume = $filenameToStore;
-       
+
         }
 
         else if($request->hasFile('cover_img')){
 
             if($personal_info->cover_img != 'cover_img.jpg'){
-                Storage::delete('public/profile_pic/'.$personal_info->cover_img);
+                File::delete(public_path('uploadedimages/'.$personal_info->cover_img));
                 }
 
         $personal_info->cover_img = $filenameToStore;
-       
+
         }
         else if($request->hasFile('project1_img')){
 
             if($personal_info->project1_img != 'project1_img.JPG'){
-                Storage::delete('public/profile_pic/'.$personal_info->project1_img);
+                File::delete(public_path('uploadedimages/'.$personal_info->project1_img));
                 }
 
         $personal_info->project1_img = $filenameToStorep1;
-       
+
         }
         else if($request->hasFile('project2_img')){
 
             if($personal_info->project2_img != 'project2_img.JPG'){
-                Storage::delete('public/profile_pic/'.$personal_info->project2_img);
+                File::delete(public_path('uploadedimages/'.$personal_info->project2_img));
                 }
 
         $personal_info->project2_img = $filenameToStorep2;
-       
+
         }
         else if($request->hasFile('project3_img')){
 
             if($personal_info->project3_img != 'project3_img.JPG'){
-                Storage::delete('public/profile_pic/'.$personal_info->project3_img);
+                File::delete(public_path('uploadedimages/'.$personal_info->project3_img));
                 }
 
         $personal_info->project3_img = $filenameToStorep3;
-       
+
         }
 
 
@@ -341,8 +363,8 @@ class personalController extends Controller
         $project3_desc = "I create this projects using C# , mysql for database";
 
 
-        
-        
+
+
 
 
         $personal_info = personal_info::find($id);
@@ -352,7 +374,7 @@ class personalController extends Controller
         $personal_info->college_desc = $college_desc;
         $personal_info->senior_high_desc = $seniorhigh_desc;
         $personal_info->junior_high_desc = $juniorhigh_desc;
-        
+
 
         $personal_info->mystudies1 = $mystudies1;
         $personal_info->mystudies2 = $mystudies2;
@@ -365,7 +387,7 @@ class personalController extends Controller
         $personal_info->mystudies9 = $mystudies9;
         $personal_info->mystudies10 = $mystudies10;
 
-        
+
         $personal_info->gmail = $gmail;
         $personal_info->contact_number = $contact_number;
         $personal_info->link1 = $link1;
@@ -383,30 +405,30 @@ class personalController extends Controller
 
 
         if($personal_info->profile_pic != 'profile.jpg'){
-            Storage::delete('public/profile_pic/'.$personal_info->profile_pic);
-            
+            File::delete(public_path('uploadedimages/'.$personal_info->profile_pic));
+
         }
 
         else if($personal_info->cover_img != 'cover_img.jpg'){
-            Storage::delete('public/profile_pic/'.$personal_info->cover_img);
+            File::delete(public_path('uploadedimages/'.$personal_info->cover_img));
             }
         else if($personal_info->resume != 'resume.docx'){
-                Storage::delete('public/profile_pic/'.$personal_info->resume);
+            File::delete(public_path('uploadedimages/'.$personal_info->resume));
                 }
         else if($personal_info->project1_img != 'project1_img.JPG'){
-                    Storage::delete('public/profile_pic/'.$personal_info->project1_img);
+            File::delete(public_path('uploadedimages/'.$personal_info->project1_img));
                     }
         else if($personal_info->project2_img != 'project2_img.JPG'){
-                        Storage::delete('public/profile_pic/'.$personal_info->project2_img);
+            File::delete(public_path('uploadedimages/'.$personal_info->project2_img));
                         }
         else if($personal_info->project3_img != 'project3_img.JPG'){
-                            Storage::delete('public/profile_pic/'.$personal_info->project3_img);
+            File::delete(public_path('uploadedimages/'.$personal_info->project3_img));
                             }
-           
-       
 
 
-        
+
+
+
         $personal_info->profile_pic = $profile;
         $personal_info->cover_img = $cover_img;
         $personal_info->resume = $resume;

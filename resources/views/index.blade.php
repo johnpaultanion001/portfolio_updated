@@ -58,7 +58,7 @@
 							</div>
 
 							<div class="left-column">
-								<img id="profile_pic" src="{{URL::to('/')}}/profile_pic/{{$personal_info->profile_pic}}">
+								<img id="profile_pic" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->profile_pic}}">
 								<h5 style="text-align: center;line-height: 0;">Personalize Theme</h5>
 
 								<div id="theme-options-wrapper">
@@ -119,7 +119,7 @@
 
 
 					<hr>
-					<p> <a target="_blank" href="/storage/profile_pic/{{$personal_info->resume}}">Download My Resume</a></p>
+					<p> <a target="_blank" href="{{URL::to('/')}}/uploadedimages/{{$personal_info->resume}}">Download My Resume</a></p>
 
 					<h4>My Studies </h4>
 
@@ -148,7 +148,7 @@
 				
 				<div class="social-links">
 
-					<img id="social_img" src="/storage/profile_pic/{{$personal_info->cover_img}}">
+					<img id="social_img" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->cover_img}}">
 					<h3>Find me on </h3>
 					
 				<p><i class="fa fa-envelope"></i> {{$personal_info->gmail}}</p>
@@ -181,7 +181,7 @@
 
 				<div>
 					<div class="post">
-						<img class="thumbnail" src="/storage/profile_pic/{{$personal_info->project1_img}}">
+						<img class="thumbnail" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->project1_img}}">
 						<div class="post-preview">
 							<h6 class="post-title">{{$personal_info->project1_title}}</h6>
 							<p class="post-intro">{{$personal_info->project1_desc}}</p>
@@ -194,7 +194,7 @@
 
 				<div>
 					<div class="post">
-						<img class="thumbnail" src="/storage/profile_pic/{{$personal_info->project2_img}}">
+						<img class="thumbnail" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->project2_img}}">
 						<div class="post-preview">
 						<h6 class="post-title">{{$personal_info->project2_title}}</h6>
 							<p class="post-intro">{{$personal_info->project2_desc}}</p>
@@ -205,7 +205,7 @@
 
 				<div>
 					<div class="post">
-						<img class="thumbnail" src="/storage/profile_pic/{{$personal_info->project3_img}}">
+						<img class="thumbnail" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->project3_img}}">
 						<div class="post-preview">
 						<h6 class="post-title">{{$personal_info->project3_title}}</h6>
 							<p class="post-intro">{{$personal_info->project3_desc}}</p>
