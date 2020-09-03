@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>JohnpaulSite</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="icon" href="https://n7.nextpng.com/sticker-png/649/178/sticker-png-cartoon-blog-graphics-red-j-hat-orange-copyright-cartoon.png"/>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/default.css') }}" rel="stylesheet">
     <link id="theme-style" rel="stylesheet" type="text/css" href="">
@@ -27,7 +28,7 @@
         <nav class="navbar navbar-expand-md shadow-sm navcolor">
             <div class="container">
                 <a class="navbar-brand bc" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                JohnpaulSite
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <i class="fa fa-align-right"></i>
