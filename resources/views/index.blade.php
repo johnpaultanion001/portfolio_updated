@@ -45,9 +45,9 @@
 								</a>
 
 								<ul id="navigation">
-									<li><a href="index.php#contact">Contact</a></li>
+									<li><a href="/#contact">Contact</a></li>
 
-									<li><a href="index.php#projects">Projects</a></li>
+									<li><a href="/#projects">Projects</a></li>
 									<li><a href="{{ route('login') }}">Admin</a></li>
 								
 

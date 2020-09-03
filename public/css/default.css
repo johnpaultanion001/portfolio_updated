@@ -542,6 +542,34 @@ h6 { font-size: 16px;}
 
 }
 
+@media screen and (max-width: 350px){
+	#preview-shadow{
+		max-width: 280px;
+		height: 180px;
+		padding-left: 10px;
+		padding-top: 10px;
+		margin-top: -30px;
+	}
+
+	#preview{
+		margin-top: -70px;
+		width: 220px;
+
+	}
+
+	.scroll-btn{
+    
+		
+		right:  1px;
+		bottom: 1px;
+	}
+	#navigation li{
+		font-size: 15px;
+	}
+	
+
+}
+
 
 .navcolor{
 	background-color: var(--mainColor);
