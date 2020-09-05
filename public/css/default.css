@@ -538,6 +538,11 @@ h6 { font-size: 16px;}
 		right:  1px;
 		bottom: 1px;
 	}
+
+	#navigation li{
+		font-size: 15px;
+	}
+	
 	
 
 }

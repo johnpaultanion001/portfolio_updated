@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Msg;
 use DB;
+use Mail; 
+
 
 class msgsController extends Controller
 {
@@ -63,6 +65,8 @@ class msgsController extends Controller
            
             
         ]);
+    
+
 
         $msg = new msg;
         $msg->name = $request->input('name');
@@ -71,7 +75,31 @@ class msgsController extends Controller
         $msg->msg = $request->input('msg');
         $msg->save();
 
+        //from('john@webslesson.info')->subject('New Customer Equiry')
+        \Mail::send('dynamic_email_template',
+             array(
+                 'name' => $request->get('name'),
+                 'email' => $request->get('email'),
+                 'subject' => $request->get('subject'),
+                 
+                 'msg' => $request->get('msg'),
+             ), function($message) use ($request)
+               {
+                  $message->from($request->email);
+                  $message->replyto($request->get('email'));
+                  $message->subject($request->get('subject'));
+                  $message->to('johnpaultanion003@gmail.com');
+               });
+
         return redirect('/')->with('success', 'Thanks for Message me . Well get back to you soon');
+
+
+
+
+
+
+
+        
 
 
     }
