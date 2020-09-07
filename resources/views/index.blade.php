@@ -36,7 +36,7 @@
 						<div class="intro-wrapper">
 							<div class="nav-wrapper">
 
-								<a href="index.html">
+								<a href="/">
 									<div class="dots-wrapper">
 										<div id="dot-1" class="browser-dot"></div>
 										<div id="dot-2" class="browser-dot"></div>

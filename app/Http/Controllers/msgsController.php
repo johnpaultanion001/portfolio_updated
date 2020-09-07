@@ -75,6 +75,7 @@ class msgsController extends Controller
         $msg->msg = $request->input('msg');
         $msg->save();
 
+        //email
         //from('john@webslesson.info')->subject('New Customer Equiry')
         // \Mail::send('dynamic_email_template',
         //      array(

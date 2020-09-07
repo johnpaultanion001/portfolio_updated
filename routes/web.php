@@ -28,7 +28,10 @@ Auth::routes();
 Route::resource('adminsite','msgsController');
 Route::get('/home', 'msgsController@index');
 Route::resource('/','personalController');
+
 Route::resource('adminsite/personalInfo','personalController');
+Route::resource('adminsite/projects/all','ProjectController');
+
 
 
 
