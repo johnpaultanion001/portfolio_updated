@@ -31,6 +31,8 @@ Route::resource('/','personalController');
 
 Route::resource('adminsite/personalInfo','personalController');
 Route::resource('adminsite/projects/all','ProjectController');
+Route::resource('/show','ProjectController');
+
 
 
 

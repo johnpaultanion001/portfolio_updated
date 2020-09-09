@@ -420,6 +420,13 @@ h6 { font-size: 16px;}
 	box-shadow: -2px 7px 21px -9px rgba(0,0,0,0.75);
 }
 
+.post:hover{
+	border-top:4px solid red;
+	
+
+}
+
+
 .msgBox{
 	border:1px solid var(--borderColor);
 	-webkit-box-shadow: -2px 7px 21px -9px rgba(0,0,0,0.75);
@@ -528,6 +535,7 @@ h6 { font-size: 16px;}
 	}
 
 	#preview{
+		margin-top: -70px;
 		width: 280px;
 
 	}

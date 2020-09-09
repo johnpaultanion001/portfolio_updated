@@ -170,55 +170,51 @@
 
 		</div>
 	</section>
+	@endforeach
 
 
 
-    <section class="s1" id="projects">
+	<section class="s1" id="projects">
 		<div class="main-container">
-			<h3 style="text-align: center;">Some of my past projects</h3>
-
-			<div class="post-wrapper">
-
-				<div>
-					<div class="post">
-						<img class="thumbnail" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->project1_img}}">
-						<div class="post-preview">
-							<h6 class="post-title">{{$personal_info->project1_title}}</h6>
-							<p class="post-intro">{{$personal_info->project1_desc}}</p>
-						<!--	<a href="post.html">Read More</a>-->
-							
+			<h3 style="text-align: center;">Some of my past projects</h3>    
+            <div class="post-wrapper"> 
+ 
+			@if(count($projects) > 0)
+				@foreach($projects as $project)
 				
-						</div>
-					</div>
-				</div>
 
-				<div>
-					<div class="post">
-						<img class="thumbnail" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->project2_img}}">
-						<div class="post-preview">
-						<h6 class="post-title">{{$personal_info->project2_title}}</h6>
-							<p class="post-intro">{{$personal_info->project2_desc}}</p>
+
+					<div class="projects">
+					<a href="/show/{{$project->id}}">
+						<div class="post">
+							<img class="thumbnail" src="{{URL::to('/')}}/uploadedimages/{{$project->image}}">
+							<div class="post-preview">
+								<h6 class="post-title">{{$project->title}}</h6>
+								<p class="post-intro">{{$project->description}}</p>
 							<!--	<a href="post.html">Read More</a>-->
-						</div>
-					</div>
-				</div>
+								
 
-				<div>
-					<div class="post">
-						<img class="thumbnail" src="{{URL::to('/')}}/uploadedimages/{{$personal_info->project3_img}}">
-						<div class="post-preview">
-						<h6 class="post-title">{{$personal_info->project3_title}}</h6>
-							<p class="post-intro">{{$personal_info->project3_desc}}</p>
-							<!--<a href="post.html">Read More</a>-->
+							</div>
 						</div>
+						</a>
 					</div>
-				</div>
+
+		
+			
+
+
+				
+				@endforeach
+			
+			{{$projects->links()}} 
+			@else
+				<p>No projects found</p>
+			@endif
+			</div>
 
 			</div>
-		</div>
-	</section>
+    </section>
 
-	@endforeach
 	
      <section class="s2" id="contact">
 		<div class="main-container">

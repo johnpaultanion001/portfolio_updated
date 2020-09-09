@@ -23,7 +23,10 @@ class ProjectController extends Controller
     { 
         $projects = Project::orderBy('id', 'desc')->paginate(6);
         return view('adminsite/projects/all.index')->with('projects', $projects);
+       
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -196,7 +199,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id);
-        return view('adminsite/projects/all.show')->with('project',$project);
+        return view('/show')->with('project',$project);
     }
 
     /**

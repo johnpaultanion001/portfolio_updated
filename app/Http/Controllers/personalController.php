@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\personal_info;
+use App\Project;
 use DB;
 
 use File; // For File
@@ -22,9 +23,22 @@ class personalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
+     // Don't forget to include 'use App\Product'
+  
+    
+    // $personal_infos = DB::select('SELECT * FROM personal_infos WHERE id = 1');
+    // return view('index')->with('personal_infos', $personal_infos);
+    // $projects = Project::orderBy('id', 'desc')->paginate(6);
+    // return view('adminsite/projects/all.index')->with('projects', $projects);
+
     {
-        $personal_infos = DB::select('SELECT * FROM personal_infos WHERE id = 1');
-        return view('index')->with('personal_infos', $personal_infos);
+
+        $personal_infos = personal_info::all();
+        $projects = Project::orderBy('id', 'desc')->paginate(6);
+        return view('index',compact(['personal_infos','projects']));
+
+        
     }
 
     /**
