@@ -73,7 +73,6 @@ class personalController extends Controller
     public function show($id)
     {
         $personal_infos = personal_info::all();
-
         return view('adminsite/personalInfo.show')->with('personal_infos', $personal_infos);
     }
 
@@ -84,11 +83,11 @@ class personalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {  
 
-        $personal_infos = personal_info::all();
-
+        $personal_infos = personal_info::find($id);
         return view('adminsite/personalInfo.edit')->with('personal_infos', $personal_infos);
+
     }
 
     /**
@@ -123,106 +122,12 @@ class personalController extends Controller
             'link2' => 'required',
             'link3' => 'required',
             'link4' => 'required',
-            'project1_title' => 'required',
-            'project1_desc' => 'required',
-            'project2_title' => 'required',
-            'project2_desc' => 'required',
-            'project3_title' => 'required',
-            'project3_desc' => 'required'
-
+          
 
 
 
         ]);
 
-
-        
-        //Handle File Upload
-        if($request->hasFile('profile_pic')){
-            //Get filename with the ext
-            $filenameWithExt = $request->file('profile_pic')->getClientOriginalName();
-            //Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            //Get just ext
-            $extension = $request->file('profile_pic')->getClientOriginalExtension();
-            //Filename to store
-            $filenameToStore=$filename.'_'.time().'.'.$extension;
-            //Upload Image
-            $path = $request->file('profile_pic')->move(public_path('/uploadedimages'), $filenameToStore);
-            // imageName = time().'.'.$request->image->getClientOriginalExtension();
-            // $request->image->move(public_path('/uploadedimages'), $imageName);
-            // $path = $request->file('profile_pic')->Storage::disk('public')->put('imgs/', $filenameToStore);
-
-
-        }
-        else if($request->hasFile('resume')){
-            //Get filename with the ext
-            $filenameWithExt = $request->file('resume')->getClientOriginalName();
-            //Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            //Get just ext
-            $extension = $request->file('resume')->getClientOriginalExtension();
-            //Filename to store
-            $filenameToStore=$filename.'_'.time().'.'.$extension;
-            //Upload Image
-            $path = $request->file('resume')->move(public_path('/uploadedimages'), $filenameToStore);
-
-        }
-        else if($request->hasFile('cover_img')){
-            //Get filename with the ext
-            $filenameWithExt = $request->file('cover_img')->getClientOriginalName();
-            //Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            //Get just ext
-            $extension = $request->file('cover_img')->getClientOriginalExtension();
-            //Filename to store
-            $filenameToStore=$filename.'_'.time().'.'.$extension;
-            //Upload Image
-            $path = $request->file('cover_img')->move(public_path('/uploadedimages'), $filenameToStore);
-        }
-        else if($request->hasFile('project1_img')){
-            //Get filename with the ext
-            $filenameWithExtp1 = $request->file('project1_img')->getClientOriginalName();
-            //Get just filename
-            $filenamep1 = pathinfo($filenameWithExtp1, PATHINFO_FILENAME);
-            //Get just ext
-            $extensionp1 = $request->file('project1_img')->getClientOriginalExtension();
-            //Filename to store
-            $filenameToStorep1=$filenamep1.'_'.time().'.'.$extensionp1;
-            //Upload Image
-            $path1 = $request->file('project1_img')->move(public_path('/uploadedimages'), $filenameToStorep1);
-        }
-        else if($request->hasFile('project2_img')){
-            //Get filename with the ext
-            $filenameWithExtp2 = $request->file('project2_img')->getClientOriginalName();
-            //Get just filename
-            $filenamep2 = pathinfo($filenameWithExtp2, PATHINFO_FILENAME);
-            //Get just ext
-            $extensionp2 = $request->file('project2_img')->getClientOriginalExtension();
-            //Filename to store
-            $filenameToStorep2=$filenamep2.'_'.time().'.'.$extensionp2;
-            //Upload Image
-            $path2 = $request->file('project2_img')->move(public_path('/uploadedimages'), $filenameToStorep2);
-        }
-        else if($request->hasFile('project3_img')){
-            //Get filename with the ext
-            $filenameWithExtp3 = $request->file('project3_img')->getClientOriginalName();
-            //Get just filename
-            $filenamep3 = pathinfo($filenameWithExtp3, PATHINFO_FILENAME);
-            //Get just ext
-            $extensionp3 = $request->file('project3_img')->getClientOriginalExtension();
-            //Filename to store
-            $filenameToStorep3=$filenamep3.'_'.time().'.'.$extensionp3;
-            //Upload Image
-            $path3 = $request->file('project3_img')->move(public_path('/uploadedimages'), $filenameToStorep3);
-        }
-
-
-
-
-
-
-        // create personal_info
         $personal_info = personal_info::find($id);
         $personal_info->intro_greetings = $request->input('IntroGreetings');
         $personal_info->what_i_do = $request->input('WhatIDo');
@@ -246,80 +151,68 @@ class personalController extends Controller
         $personal_info->link2 = $request->input('link2');
         $personal_info->link3 = $request->input('link3');
         $personal_info->link4 = $request->input('link4');
-        $personal_info->project1_title = $request->input('project1_title');
-        $personal_info->project1_desc = $request->input('project1_desc');
-        $personal_info->project2_title = $request->input('project2_title');
-        $personal_info->project2_desc = $request->input('project2_desc');
-        $personal_info->project3_title = $request->input('project3_title');
-        $personal_info->project3_desc = $request->input('project3_desc');
+       
 
 
-
-
-
-
+        
+        //Handle File Upload
         if($request->hasFile('profile_pic')){
 
-                if($personal_info->profile_pic != 'profile.jpg'){
-
-                   //Storage::delete('imgs/'.$personal_info->profile_pic);
-
-
-                    File::delete(public_path('uploadedimages/'.$personal_info->profile_pic));
-
-
-                    }
-
+            if($personal_info->profile_pic != 'profile.jpg'){
+                File::delete(public_path('uploadedimages/'.$personal_info->profile_pic));
+                }
+            //Get filename with the ext
+            $filenameWithExt = $request->file('profile_pic')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //Get just ext
+            $extension = $request->file('profile_pic')->getClientOriginalExtension();
+            //Filename to store
+            $filenameToStore=$filename.'_'.'profile'.time().'.'.$extension;
+            //Upload Image
+            $path = $request->file('profile_pic')->move(public_path('/uploadedimages'), $filenameToStore);
             $personal_info->profile_pic = $filenameToStore;
 
-        }
-        else if($request->hasFile('resume')){
 
+        }
+        if($request->hasFile('resume')){
             if($personal_info->resume != 'resume.docx'){
                 File::delete(public_path('uploadedimages/'.$personal_info->resume));
                 }
-
-        $personal_info->resume = $filenameToStore;
+            //Get filename with the ext
+            $filenameWithExt = $request->file('resume')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //Get just ext
+            $extension = $request->file('resume')->getClientOriginalExtension();
+            //Filename to store
+            $filenameToStore=$filename.'_'.'resume'.time().'.'.$extension;
+            //Upload Image
+            $path = $request->file('resume')->move(public_path('/uploadedimages'), $filenameToStore);
+            $personal_info->resume = $filenameToStore;
 
         }
-
-        else if($request->hasFile('cover_img')){
-
+        if($request->hasFile('cover_img')){
             if($personal_info->cover_img != 'cover_img.jpg'){
                 File::delete(public_path('uploadedimages/'.$personal_info->cover_img));
                 }
 
-        $personal_info->cover_img = $filenameToStore;
-
+            //Get filename with the ext
+            $filenameWithExt = $request->file('cover_img')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //Get just ext
+            $extension = $request->file('cover_img')->getClientOriginalExtension();
+            //Filename to store
+            $filenameToStore=$filename.'_'.'cover_img'.time().'.'.$extension;
+            //Upload Image
+            $path = $request->file('cover_img')->move(public_path('/uploadedimages'), $filenameToStore);
+            $personal_info->cover_img = $filenameToStore;
         }
-        else if($request->hasFile('project1_img')){
+      
+       
 
-            if($personal_info->project1_img != 'project1_img.JPG'){
-                File::delete(public_path('uploadedimages/'.$personal_info->project1_img));
-                }
-
-        $personal_info->project1_img = $filenameToStorep1;
-
-        }
-        else if($request->hasFile('project2_img')){
-
-            if($personal_info->project2_img != 'project2_img.JPG'){
-                File::delete(public_path('uploadedimages/'.$personal_info->project2_img));
-                }
-
-        $personal_info->project2_img = $filenameToStorep2;
-
-        }
-        else if($request->hasFile('project3_img')){
-
-            if($personal_info->project3_img != 'project3_img.JPG'){
-                File::delete(public_path('uploadedimages/'.$personal_info->project3_img));
-                }
-
-        $personal_info->project3_img = $filenameToStorep3;
-
-        }
-
+    
 
         $personal_info->save();
 
@@ -423,22 +316,13 @@ class personalController extends Controller
 
         }
 
-        else if($personal_info->cover_img != 'cover_img.jpg'){
+        if($personal_info->cover_img != 'cover_img.jpg'){
             File::delete(public_path('uploadedimages/'.$personal_info->cover_img));
             }
-        else if($personal_info->resume != 'resume.docx'){
+        if($personal_info->resume != 'resume.docx'){
             File::delete(public_path('uploadedimages/'.$personal_info->resume));
                 }
-        else if($personal_info->project1_img != 'project1_img.JPG'){
-            File::delete(public_path('uploadedimages/'.$personal_info->project1_img));
-                    }
-        else if($personal_info->project2_img != 'project2_img.JPG'){
-            File::delete(public_path('uploadedimages/'.$personal_info->project2_img));
-                        }
-        else if($personal_info->project3_img != 'project3_img.JPG'){
-            File::delete(public_path('uploadedimages/'.$personal_info->project3_img));
-                            }
-
+     
 
 
 

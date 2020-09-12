@@ -29,9 +29,11 @@
 
         @endforeach
     <div class="container">
-    <div class="row justify-content-center">
-        {{$msgs->links()}}
-    </div>
+
+        <div class="row justify-content-center" style="width: 50%;">
+            {{$msgs->links()}}
+        </div>
+
     </div>
 
     <a href="/adminsite/personalInfo/show" class="btn btn-primary">View Personal Information</a>

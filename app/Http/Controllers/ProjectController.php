@@ -215,6 +215,7 @@ class ProjectController extends Controller
         return view('adminsite/projects/all.edit')->with('project',$project);
     }
 
+    
     /**
      * Update the specified resource in storage.
      *
