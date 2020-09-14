@@ -191,7 +191,7 @@
 							<div class="post-preview">
 								<h6 class="post-title">{{$project->title}}</h6>
 								<p class="post-intro">{{$project->description}}</p>
-							<!--	<a href="post.html">Read More</a>-->
+								<a href="/show/{{$project->id}}">Read More</a>
 								
 
 							</div>

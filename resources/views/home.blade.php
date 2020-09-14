@@ -29,9 +29,11 @@
 
         @endforeach
     <div class="container">
-
-        <div class="row justify-content-center" style="width: 50%;">
+    
+        <div class="row justify-content-center">
+        <div class="col-md-8 ">
             {{$msgs->links()}}
+        </div>
         </div>
 
     </div>
