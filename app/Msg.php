@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Msg extends Model
 {
-    protected $table = 'msgs';
-    public $primaryKey = 'id';
-    public $timestamps = true;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'subject',
+        'msg'
+    ];
+
+  
 }

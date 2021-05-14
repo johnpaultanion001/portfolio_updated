@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\personal_info;
 use App\Project;
+use App\Mystudy;
+use App\Contactinfo;
 use DB;
 
 use File; // For File
@@ -13,10 +17,7 @@ use File; // For File
 class personalController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth', ['except' => ['index']]);
-    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +37,9 @@ class personalController extends Controller
 
         $personal_infos = personal_info::all();
         $projects = Project::orderBy('id', 'desc')->paginate(6);
-        return view('index',compact(['personal_infos','projects']));
+        $studies = Mystudy::all();
+        $contacts = Contactinfo::all();
+        return view('index',compact(['personal_infos','projects','studies','contacts']));
 
         
     }
@@ -70,25 +73,20 @@ class personalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+  
+
     public function show($id)
     {
-        $personal_infos = personal_info::all();
-        return view('adminsite/personalInfo.show')->with('personal_infos', $personal_infos);
+        $project = Project::find($id);
+    	return view("single-view", compact("project"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {  
-
-        $personal_infos = personal_info::find($id);
-        return view('adminsite/personalInfo.edit')->with('personal_infos', $personal_infos);
-
+    public function landingprojects()
+    { 
+        $projects = Project::latest()->get();
+    	return view("landingprojects", compact("projects"));
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -259,15 +257,15 @@ class personalController extends Controller
 
         $project1_img = "project1_img.JPG";
         $project1_title = "Library system with Barcode";
-        $project1_desc = "I create this projects using c# , mysql for database";
+        $project1_desc = "I created this projects using c# , mysql for database";
 
         $project2_img = "project2_img.JPG";
         $project2_title = "Treasury System With barcode";
-        $project2_desc = "I create this projects using Visual Basic , mysql for database";
+        $project2_desc = "I created this projects using Visual Basic , mysql for database";
 
         $project3_img = "project3_img.JPG";
         $project3_title = "Entrance Exam And Monitoring Students";
-        $project3_desc = "I create this projects using C# , mysql for database";
+        $project3_desc = "I created this projects using C# , mysql for database";
 
 
 

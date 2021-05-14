@@ -17,6 +17,19 @@
 
 }
 
+.loading {
+	display:    none;
+	position:   fixed;
+	z-index:    1000;
+	top:        0;
+	left:       0;
+	height:     100%;
+	width:      100%;
+	background:
+				url('https://icon-library.com/images/loading-gif-icon/loading-gif-icon-18.jpg') 
+				50% 50% 
+				no-repeat;
+  }
 
 html, body{
 	padding: 0;
@@ -49,12 +62,6 @@ ul{
 	list-style: none;
 }
 
-h1 { font-size: 56px;}
-h2 { font-size: 36px;}
-h3 { font-size: 28px;}
-h4 { font-size: 24px;}
-h5 { font-size: 20px;}
-h6 { font-size: 16px;}
 
 
 .s1{
@@ -74,11 +81,6 @@ h6 { font-size: 16px;}
 	border-bottom:1px solid var(--borderColor);
 	overflow-y:auto;
 }
-
-
-
-
-
 
 
 
@@ -153,6 +155,7 @@ h6 { font-size: 16px;}
 
 #navigation a{
 	color:var(--mainText);
+	text-decoration: none;
 }
 
 
@@ -425,6 +428,7 @@ h6 { font-size: 16px;}
 .post:hover a  {
 	
 	border-bottom:1px solid red;
+	text-decoration: none;
 	
 }
 

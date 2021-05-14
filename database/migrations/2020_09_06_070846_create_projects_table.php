@@ -15,23 +15,10 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('personal_id')->default('1');
             $table->string('title');
-            $table->string('description');
+            $table->mediumtext('description');
             $table->string('image');
-
-            $table->string('ui_title1');
-            $table->string('uiimage1');
-            $table->string('ui_title2');
-            $table->string('uiimage2');
-            $table->string('ui_title3');
-            $table->string('uiimage3');
-            $table->string('ui_title4');
-            $table->string('uiimage4');
-            $table->string('ui_title5');
-            $table->string('uiimage5');
-            
-
-
             $table->timestamps();
         });
     }

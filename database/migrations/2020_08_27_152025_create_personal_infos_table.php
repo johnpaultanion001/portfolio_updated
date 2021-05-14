@@ -27,38 +27,17 @@ class CreatePersonalInfosTable extends Migration
             $table->string('junior_high_desc');
 
             $table->string('resume');
-            $table->string('mystudies1');
-            $table->string('mystudies2');
-            $table->string('mystudies3');
-            $table->string('mystudies4');
-            $table->string('mystudies5');
-            $table->string('mystudies6');
-            $table->string('mystudies7');
-            $table->string('mystudies8');
-            $table->string('mystudies9');
-            $table->string('mystudies10');
-
+            
             //contact info
             $table->string('cover_img');
-            $table->string('gmail');
-            $table->string('contact_number');
-            $table->string('link1');
-            $table->string('link2');
-            $table->string('link3');
-            $table->string('link4');
+            //$table->string('gmail');
+            //$table->string('contact_number');
+            //$table->string('link1');
+            //$table->string('link2');
+            //$table->string('link3');
+            //$table->string('link4');
 
             //Projects
-            $table->string('project1_img');
-            $table->string('project1_title');
-            $table->string('project1_desc');
-
-            $table->string('project2_img');
-            $table->string('project2_title');
-            $table->string('project2_desc');
-
-            $table->string('project3_img');
-            $table->string('project3_title');
-            $table->string('project3_desc');
            
             
 

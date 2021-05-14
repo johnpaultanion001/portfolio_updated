@@ -1,0 +1,115 @@
+@extends('../layouts.app')
+@section('sub-title','Personal Information')
+@section('navbar')
+    @include('../components.navbar')
+@endsection
+@section('main-sidebar')
+    @include('../components.main-sidebar')
+@endsection
+
+@section('main-content')
+    <div class="content-wrapper">
+
+		@foreach($personal_infos as $personal_info)
+			{!! Form::open(['action' => ['adminpersonalinfoController@update', $personal_info->id], 'method' => 'POST' , 'enctype' => 'multipart/form-data']) !!}
+							<div class="col-md-12">
+								<div class="row p-2">
+									<div class="col-md-11 card mx-auto">
+											<div class="form-group">
+											<h3>Profile Section</h3>
+											@include('inc.messages')	
+												<b>Intro Greetings:</b>
+												<input type="text" value="{{$personal_info->intro_greetings}}" class="form-control" id="IntroGreetings" name="IntroGreetings" placeholder="Enter Intro Greetings" required />
+												<br><b>Profile Image:</b>
+												<input id="profile_pic" type="file" accept="image/*" name="profile_pic" class="btn-success"/>
+													<small>Current Profile Pic: {{Form::label('CurrentProfilePic', $personal_info->profile_pic)}}</small>
+												<br><b>What I Do:</b>
+													<textarea class="form-control" id="WhatIDo" name="WhatIDo" placeholder="Enter What I Do" required>{{$personal_info->what_i_do}}</textarea>
+											</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="row p-2">
+									<div class="col-md-11 card mx-auto">
+											<div class="form-group">
+											<h3>About Section</h3>
+											@include('inc.messages')	
+												
+												<b>More About Me:</b>
+													<textarea class="form-control" id="MoreAboutMe" name="MoreAboutMe" placeholder="Enter MoreAboutMe" required>{{$personal_info->more_about_me}}</textarea>
+													<p><b> • College :</b><input type="text" value="{{$personal_info->college_desc}}" class="form-control" id="college_desc" name="college_desc" placeholder="College Desciption" required />					
+													<p><b> • Senior High : </b>{{Form::text('senior_high_desc', $personal_info->senior_high_desc, ['class' => 'form-control', 'placeholder'=>'Senior High Desciption' , 'required'])}}</p>
+													<p><b> • Junior High : </b>{{Form::text('junior_high_desc', $personal_info->junior_high_desc, ['class' => 'form-control', 'placeholder'=>'Junior High Desc' , 'required'])}}</p>
+												<b>Resume:</b>
+												<input id="resume" type="file" name="resume" class="btn-success"/>
+													<small>Current Resume File: {{Form::label('Resume', $personal_info->resume)}}</small> 
+												
+												<li>{{Form::text('mystudies1', $personal_info->mystudies1)}}</li>
+												<li> {{Form::text('mystudies2', $personal_info->mystudies2)}}</li>
+												<li> {{Form::text('mystudies3', $personal_info->mystudies3)}}</li>
+												<li> {{Form::text('mystudies4', $personal_info->mystudies4)}}</li>
+												<li> {{Form::text('mystudies5', $personal_info->mystudies5)}}</li>
+												<li> {{Form::text('mystudies6', $personal_info->mystudies6)}}</li>
+												<li> {{Form::text('mystudies7', $personal_info->mystudies7)}}</li>
+												<li>{{Form::text('mystudies8', $personal_info->mystudies8)}}</li>
+												<li>{{Form::text('mystudies9', $personal_info->mystudies9)}}</li>
+												<li>{{Form::text('mystudies10', $personal_info->mystudies10)}}</li>
+												{{Form::file('cover_img')}}
+											</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group text-center">
+							{{Form::hidden('_method','PUT')}}
+							{{Form::submit('Submit' , ['id' => 'submit-btn', 'class' => 'btn btn-primary'])}}
+							</div>
+			{!! Form::close() !!}
+
+		
+
+							<!-- <div class="col-md-12">
+								<div class="row">
+
+									<h4>More about me</h4>
+											{{Form::textarea('MoreAboutMe', $personal_info->more_about_me, ['class' => 'form-control','style' => 'height: 130px; ', 'placeholder'=>'More About Me'])}}
+											<p><b> • College :</b> {{Form::text('college_desc', $personal_info->college_desc, ['class' => 'form-control', 'placeholder'=>'College Desciption'])}}</p>
+											<p><b> • Senior High : </b>{{Form::text('senior_high_desc', $personal_info->senior_high_desc, ['class' => 'form-control', 'placeholder'=>'Senior High Desciption'])}}</p>
+											<p><b> • Junior High : </b>{{Form::text('junior_high_desc', $personal_info->junior_high_desc, ['class' => 'form-control', 'placeholder'=>'Junior High Desc'])}}</p>
+									{{Form::file('resume')}}
+									<small>Current Resume File: {{Form::label('CurrentResumeFile', $personal_info->resume)}}</small>
+									<li>{{Form::text('mystudies1', $personal_info->mystudies1)}}</li>
+									<li> {{Form::text('mystudies2', $personal_info->mystudies2)}}</li>
+									<li> {{Form::text('mystudies3', $personal_info->mystudies3)}}</li>
+									<li> {{Form::text('mystudies4', $personal_info->mystudies4)}}</li>
+									<li> {{Form::text('mystudies5', $personal_info->mystudies5)}}</li>
+									<li> {{Form::text('mystudies6', $personal_info->mystudies6)}}</li>
+									<li> {{Form::text('mystudies7', $personal_info->mystudies7)}}</li>
+									<li>{{Form::text('mystudies8', $personal_info->mystudies8)}}</li>
+									<li>{{Form::text('mystudies9', $personal_info->mystudies9)}}</li>
+									<li>{{Form::text('mystudies10', $personal_info->mystudies10)}}</li>
+									{{Form::file('cover_img')}}
+												<small>Current Cover Image: {{Form::label('CurrentCoverImg', $personal_info->cover_img)}}</small>
+
+
+													<h3>Find me on </h3>
+
+												<p>{{Form::text('gmail', $personal_info->gmail, ['placeholder'=>'Gmail'])}} <i class="fa fa-envelope"></i></p>
+												<p>{{Form::text('contact_number', $personal_info->contact_number, [ 'placeholder'=>'Contact Number'])}} <i class="fa fa-phone"></i></p>
+												<p> {{Form::text('link1', $personal_info->link1 , ['placeholder'=>'link1'])}} <i class="fa fa-linkedin"></i><small><a target="_blank" href="https://github.com/{{$personal_info->link1}}">https://github.com/{{$personal_info->link1}}</a></small></p>
+												<p>{{Form::text('link2', $personal_info->link2 , ['placeholder'=>'link2'])}} <i class="fa fa-github"></i><small><a target="_blank" href="https://github.com/{{$personal_info->link2}}">https://github.com/{{$personal_info->link2}}</a></small></p>
+												<p>{{Form::text('link3', $personal_info->link3 , ['placeholder'=>'link3'])}} <i class="fa fa-codepen"></i><small><a target="_blank" href="https://codepen.io/{{$personal_info->link3}}">https://codepen.io/{{$personal_info->link3}}</a></small></p>
+												<p>{{Form::text('link4', $personal_info->link4 , ['placeholder'=>'link4'])}} <i class="fa fa-facebook"></i><small><a target="_blank" href="https://www.facebook.com/{{$personal_info->link4}}">https://www.facebook.com/{{$personal_info->link4}}</a></small></p>
+								</div>
+							</div> -->
+
+
+			
+		@endforeach
+    </div>
+
+@endsection
+
+@section('footer')
+    @include('../components.footer')
+@endsection

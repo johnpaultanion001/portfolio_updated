@@ -70,6 +70,9 @@ return [
                     'weight' => 100,
                 ],
             ],
+            'none' => [
+                'driver' => 'null',
+            ],
         ],
 
         'redis' => [

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Msg;
 use DB;
 use Mail; 
+use DataTables;
+use Validator;
 
 
 class msgsController extends Controller
@@ -25,18 +28,23 @@ class msgsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //return Post::where('title', 'Post Two')->get();
-        //$posts = DB::select('SELECT * FROM posts');
-        //$posts = Post::all();
-        //$posts = Post::orderBy('title', 'desc')->get();
-        //$posts = Post::orderBy('title', 'desc')->take(1)->get();
+        if ($request->ajax()) {
+            $data = Msg::all();
 
-        //$posts = Post::orderBy('title', 'desc')->paginate(1);
+            return DataTables::of($data)
+                ->addColumn('action', function ($data) {
+                    $button = '<button type="button" name="edit" edit="' . $data->id . '" class="edit btn btn-info btn-sm">Edit</button>';
+                    $button .= '<button type="button" name="delete" delete="' . $data->id . '" id="' . $data->id . '" class="delete btn btn-danger btn-sm ml-2">Delete</button>';
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
-        $msgs = Msg::orderBy('id', 'desc')->paginate(2);
-        return view('home')->with('msgs', $msgs);
+        return view('adminsite.msgs.msgs');
+       
     }
 
     /**
@@ -57,23 +65,23 @@ class msgsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'subject' => 'required',
-            'msg' => 'required',
+        // $this->validate($request, [
+        //     'name' => 'required',
+        //     'email' => ['required', 'string', 'email', 'max:255'],
+        //     'subject' => 'required',
+        //     'msg' => 'required',
            
             
-        ]);
+        // ]);
     
 
 
-        $msg = new msg;
-        $msg->name = $request->input('name');
-        $msg->email = $request->input('email');
-        $msg->subject = $request->input('subject');
-        $msg->msg = $request->input('msg');
-        $msg->save();
+        // $msg = new msg;
+        // $msg->name = $request->input('name');
+        // $msg->email = $request->input('email');
+        // $msg->subject = $request->input('subject');
+        // $msg->msg = $request->input('msg');
+        // $msg->save();
 
         //email
         //from('john@webslesson.info')->subject('New Customer Equiry')
@@ -92,17 +100,7 @@ class msgsController extends Controller
         //           $message->to('johnpaultanion003@gmail.com');
         //        });
 
-        return redirect('/')->with('success', 'Thanks for Message me . Well get back to you soon');
-
-
-
-
-
-
-
-        
-
-
+        // return redirect('/')->with('success', 'Thanks for Message me . Well get back to you soon');
     }
 
     /**
@@ -113,8 +111,7 @@ class msgsController extends Controller
      */
     public function show($id)
     {
-        $msg = Msg::find($id);
-        return view('adminsite.show')->with('msg',$msg);
+       
     }
 
     /**
@@ -125,7 +122,10 @@ class msgsController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (request()->ajax()) {
+            $data = Msg::findOrFail($id);
+            return response()->json(['result' => $data]);
+        }
     }
 
     /**
@@ -136,8 +136,30 @@ class msgsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {  
+
+            $validated =  Validator::make($request->all(), [
+                'name' => ['required'],
+                'email' => ['required','email'],
+                'subject' => ['required', 'string', 'max:255'],
+                'msg' => ['required', 'string', 'max:255'],
+            
+            ]);
+
+            if ($validated->fails()) {
+                return response()->json(['errors' => $validated->errors()]);
+            }
+
+            Msg::find($id)->update([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'subject' => $request->input('subject'),
+                'msg' => $request->input('msg'),
+            
+            ]);
+
+            return response()->json(['success' => 'Data updated successfully']);
+            
     }
 
     /**
@@ -148,9 +170,7 @@ class msgsController extends Controller
      */
     public function destroy($id)
     {
-        $msg = Msg::find($id);
-        
-       $msg->delete();
-       return redirect('/adminsite')->with('success', 'Msg Removed');
+        $msg = Msg::findOrFail($id);
+        return response()->json(['success' => $msg->delete()]);
     }
 }

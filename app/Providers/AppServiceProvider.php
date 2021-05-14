@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Cache\NullStore;
+use Cache;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,10 +27,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-      if(env('APP_ENV') !== 'local') {
+      Schema::defaultstringLength(191);
+     
 
-        URL::forceScheme('https');
-
-      }
+      Cache::extend('none', function ($app) {
+        return Cache::repository(new NullStore);
+    });
     }
 }
